@@ -8,6 +8,7 @@
   const adFormTimeInInput = document.querySelector(`#timein`);
   const adFormTimeOutInput = document.querySelector(`#timeout`);
   const adFormHousingTypeSelect = document.querySelector(`#type`);
+  const addressCoordinates = document.querySelector(`#address`);
   const housingMinPrice = {
     bungalow: 0,
     flat: 1000,
@@ -34,6 +35,10 @@
     elements.forEach(function (element) {
       element.removeAttribute(`disabled`);
     });
+  };
+
+  const addAdressCoords = (coords) => {
+    addressCoordinates.value = coords;
   };
 
   adFormSubmit.addEventListener(`click`, () => {
@@ -72,6 +77,7 @@
   });
   window.form = {
     allElementsDisabled,
-    allElementsActivate
+    allElementsActivate,
+    addAdressCoords
   };
 })();

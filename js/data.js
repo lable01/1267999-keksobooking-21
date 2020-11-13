@@ -25,7 +25,10 @@
     MIN: 1,
     MAX: 6,
   };
-  const CHECKOUT = [`12:00`, `13:00`, `14:00`];
+  const CHECKOUT = [
+    `12:00`,
+    `13:00`,
+    `14:00`];
   const FEATURES = [
     `wifi`,
     `dishwasher`,
@@ -79,9 +82,9 @@
     return pins;
   };
   window.data = {
-    Price,
     ADS_TYPE_RUS,
-    createAdverts,
-    Coordinates
+    Coordinates,
+    Price,
+    createAdverts
   };
 })();

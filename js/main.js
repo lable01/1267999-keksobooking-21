@@ -1,12 +1,9 @@
 'use strict';
 
-// const ADS_NUMBER = 8;
-const adForm = document.querySelector(`.ad-form`);
-const adFormHeader = adForm.querySelector(`.ad-form-header`);
-const adFormElements = adForm.querySelectorAll(`.ad-form__element`);
+const adFormHeader = window.form.adForm.querySelector(`.ad-form-header`);
+const adFormElements = window.form.adForm.querySelectorAll(`.ad-form__element`);
 const mapFilters = document.querySelectorAll(`.map__filter`);
 const mapPins = document.querySelector(`.map__pins`);
-// const createPins = window.data.createAdverts(ADS_NUMBER);
 const renderPins = (data) => {
   const fragmentPin = document.createDocumentFragment();
   data.forEach((pin) => {
@@ -23,7 +20,7 @@ const deactivatePage = () => {
 deactivatePage();
 const activatePage = () => {
   window.map.map.classList.remove(`map--faded`);
-  adForm.classList.remove(`ad-form--disabled`);
+  window.form.adForm.classList.remove(`ad-form--disabled`);
   adFormHeader.removeAttribute(`disabled`);
   window.form.allElementsActivate(mapFilters);
   window.form.allElementsActivate(adFormElements);
@@ -31,7 +28,7 @@ const activatePage = () => {
   window.map.getPinCoords();
 };
 window.map.mapPinMain.addEventListener(`click`, () => {
-  window.load.loadData((data) => {
+  window.server.loadData((data) => {
     activatePage();
     renderPins(data);
   },
@@ -44,4 +41,7 @@ window.map.mapPinMain.addEventListener(`click`, () => {
     document.body.insertAdjacentElement(`afterbegin`, errorElement);
   }
   );
+  window.main = {
+    deactivatePage
+  };
 });

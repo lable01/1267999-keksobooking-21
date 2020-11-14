@@ -1,10 +1,6 @@
 'use strict';
 
 (() => {
-  // const isEvtEvent = (evt, action) => {
-
-  // }
-
   /**
   * Ищет случайное число
   * @param {Number} min - минимальное значение

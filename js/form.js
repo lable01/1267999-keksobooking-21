@@ -1,6 +1,8 @@
 'use strict';
 
 (() => {
+  const adForm = document.querySelector(`.ad-form`);
+  const mainPage = document.querySelector(`main`);
   const adFormSubmit = document.querySelector(`.ad-form__submit`);
   const roomNumber = document.querySelector(`#room_number`);
   const capacityNumber = document.querySelector(`#capacity`);
@@ -54,7 +56,7 @@
       roomNumber.setCustomValidity(``);
     } else if ((roomQuantity === 100) && (questQuantity === 0)) {
       roomNumber.setCustomValidity(``);
-    } else if ((priceQuantity < window.data.Price.MIN) || (priceQuantity > window.data.Price.MAX)) {
+    } else if ((priceQuantity < window.data.price.MIN) || (priceQuantity > window.data.price.MAX)) {
       priceRoom.setCustomValidity(`Пожалуйста измените значение от 2000 до 20000`);
     } else {
       roomNumber.setCustomValidity(`Введено некорректное значение`);
@@ -75,7 +77,54 @@
     priceRoom.placeholder = housingMinPrice[adFormHousingTypeSelect.value];
     priceRoom.setAttribute(`min`, housingMinPrice[adFormHousingTypeSelect.value]);
   });
+
+
+
+  const showSuccessMessage = () => {
+    const successTemplate = document.querySelector(`#success`).content.querySelector(`.success`);
+    const successMessage = successTemplate.cloneNode(true);
+    mainPage.appendChild(successMessage);
+    document.addEventListener(`click`, () => {
+      successMessage.remove();
+    });
+    document.addEventListener(`keydown`, (evt) => {
+      if (evt.key === `Escape`) {
+        successMessage.remove();
+      }
+    });
+  };
+
+  const showErrorMessage = () => {
+    const errorTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
+    const errorMessage = errorTemplate.cloneNode(true);
+    const removeErrorMessage = () => {
+      errorMessage.remove();
+    };
+    mainPage.appendChild(errorMessage);
+    errorMessage.querySelector(`.error__button`).addEventListener(`click`, removeErrorMessage);
+    errorMessage.addEventListener(`click`, removeErrorMessage);
+    document.addEventListener(`keydown`, (evt) => {
+      if (evt.key === `Escape`) {
+        removeErrorMessage;
+      }
+    });
+  };
+
+  adForm.addEventListener(`submit`, (evt) => {
+    window.server.uploadData(new FormData(adForm), showSuccessMessage, showErrorMessage);
+    evt.preventDefault();
+    window.main.deactivatePage();
+    window.pin.removePins();
+    window.map.setMainPinCenter();
+    adForm.reset();
+  });
+
+  adForm.addEventListener(`reset`, () => {
+    adForm.reset();
+  });
+
   window.form = {
+    adForm,
     allElementsDisabled,
     allElementsActivate,
     addAdressCoords

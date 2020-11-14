@@ -1,35 +1,35 @@
 'use strict';
 
 (() => {
-  const ADS_TITLE = [
+  const adsTitle = [
     `Первое предложение`,
     `Второе предложение`,
     `Третье предложение`
   ];
-  const Price = {
+  const price = {
     MIN: 2000,
     MAX: 20000,
   };
-  const ADS_TYPE_RUS = {
+  const adsTypeRus = {
     palace: `Дворец`,
     flat: `Квартира`,
     house: `Дом`,
     bungalow: `Бунгало`,
   };
-  const ADS_TYPE = Object.keys(ADS_TYPE_RUS);
-  const Rooms = {
+  const adsType = Object.keys(adsTypeRus);
+  const rooms = {
     MIN: 1,
     MAX: 6,
   };
-  const Guests = {
+  const guests = {
     MIN: 1,
     MAX: 6,
   };
-  const CHECKOUT = [
+  const checkout = [
     `12:00`,
     `13:00`,
     `14:00`];
-  const FEATURES = [
+  const features = [
     `wifi`,
     `dishwasher`,
     `parking`,
@@ -37,12 +37,12 @@
     `elevator`,
     `conditioner`
   ];
-  const DESCRIPTIONS = [
+  const descriptions = [
     `Описание первое`,
     `Описание второе`,
     `Описание третье`
   ];
-  const PHOTOS = [
+  const photos = [
     `http://o0.github.io/assets/images/tokyo/hotel1.jpg`,
     `http://o0.github.io/assets/images/tokyo/hotel2.jpg`,
     `http://o0.github.io/assets/images/tokyo/hotel3.jpg`
@@ -61,17 +61,17 @@
           avatar: `img/avatars/user0` + [i + 1] + `.png`
         },
         offer: {
-          title: ADS_TITLE[window.util.getRandomNumber(0, ADS_TITLE.length - 1)],
+          title: adsTitle[window.util.getRandomNumber(0, adsTitle.length - 1)],
           adress: [window.util.getRandomNumber(Coordinates.X_MIN, Coordinates.X_MAX), window.util.getRandomNumber(Coordinates.Y_MIN, Coordinates.Y_MAX)],
-          price: window.util.getRandomNumber(Price.MIN, Price.MAX),
-          type: ADS_TYPE[window.util.getRandomNumber(0, ADS_TYPE.length - 1)],
-          rooms: window.util.getRandomNumber(Rooms.MIN, Rooms.MAX),
-          guest: window.util.getRandomNumber(Guests.MIN, Guests.MAX),
-          checkin: CHECKOUT[window.util.getRandomNumber(0, CHECKOUT.length - 1)],
-          checkout: CHECKOUT[window.util.getRandomNumber(0, CHECKOUT.length - 1)],
-          features: window.util.getRandomArray(FEATURES),
-          description: DESCRIPTIONS[window.util.getRandomNumber(0, DESCRIPTIONS.length - 1)],
-          photos: window.util.getRandomArray(PHOTOS),
+          price: window.util.getRandomNumber(price.MIN, price.MAX),
+          type: adsType[window.util.getRandomNumber(0, adsType.length - 1)],
+          rooms: window.util.getRandomNumber(rooms.MIN, rooms.MAX),
+          guest: window.util.getRandomNumber(guests.MIN, guests.MAX),
+          checkin: checkout[window.util.getRandomNumber(0, checkout.length - 1)],
+          checkout: checkout[window.util.getRandomNumber(0, checkout.length - 1)],
+          features: window.util.getRandomArray(features),
+          description: descriptions[window.util.getRandomNumber(0, descriptions.length - 1)],
+          photos: window.util.getRandomArray(photos),
         },
         location: {
           x: window.util.getRandomNumber(Coordinates.X_MIN, Coordinates.X_MAX),
@@ -82,9 +82,9 @@
     return pins;
   };
   window.data = {
-    ADS_TYPE_RUS,
     Coordinates,
-    Price,
+    adsTypeRus,
+    price,
     createAdverts
   };
 })();

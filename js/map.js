@@ -4,6 +4,8 @@
   const PINTIP_HEIGHT = 22;
   const map = document.querySelector(`.map`);
   const mapPinMain = map.querySelector(`.map__pin--main`);
+  const startPositionX = mapPinMain.offsetLeft;
+  const startPositionY = mapPinMain.offsetTop;
 
   const getPinCoords = () => {
     let coordinateX;
@@ -87,9 +89,15 @@
     document.addEventListener(`mouseup`, onMouseUp);
   });
 
+  const setMainPinCenter = () => {
+    mapPinMain.style.left = startPositionX + `px`;
+    mapPinMain.style.top = startPositionY + `px`;
+  };
+
   window.map = {
     map,
     mapPinMain,
-    getPinCoords
+    getPinCoords,
+    setMainPinCenter
   };
 })();

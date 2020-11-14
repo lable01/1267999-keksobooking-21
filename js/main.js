@@ -30,9 +30,9 @@ const activatePage = () => {
 };
 window.map.mapPinMain.addEventListener(`click`, () => {
   window.server.loadData((data) => {
-    window.data = data;
     activatePage();
     renderPins(data.slice(0, PINS_COUNT));
+    window.dataMain = data;
   },
   (errorMessage) => {
     const errorElement = document.createElement(`div`);
@@ -44,6 +44,7 @@ window.map.mapPinMain.addEventListener(`click`, () => {
   }
   );
   window.main = {
+    PINS_COUNT,
     deactivatePage,
     renderPins
   };

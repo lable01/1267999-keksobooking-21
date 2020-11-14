@@ -13,9 +13,9 @@
   };
 
   const showFiltredData = () => {
-    const filtredData = window.data.filter(makeFilter);
+    const filtredData = window.dataMain.filter(makeFilter);
     window.pin.removePins();
-    window.main.renderPins(filtredData);
+    window.main.renderPins(filtredData.slice(0, window.main.PINS_COUNT));
   };
 
   filterHousingTypeSelect.addEventListener(`change`, () => {

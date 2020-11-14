@@ -1,5 +1,6 @@
 'use strict';
 
+const PINS_COUNT = 5;
 const adFormHeader = window.form.adForm.querySelector(`.ad-form-header`);
 const adFormElements = window.form.adForm.querySelectorAll(`.ad-form__element`);
 const mapFilters = document.querySelectorAll(`.map__filter`);
@@ -29,8 +30,9 @@ const activatePage = () => {
 };
 window.map.mapPinMain.addEventListener(`click`, () => {
   window.server.loadData((data) => {
+    window.data = data;
     activatePage();
-    renderPins(data);
+    renderPins(data.slice(0, PINS_COUNT));
   },
   (errorMessage) => {
     const errorElement = document.createElement(`div`);
@@ -42,6 +44,7 @@ window.map.mapPinMain.addEventListener(`click`, () => {
   }
   );
   window.main = {
-    deactivatePage
+    deactivatePage,
+    renderPins
   };
 });

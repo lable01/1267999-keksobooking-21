@@ -11,6 +11,7 @@
   const adFormTimeOutInput = document.querySelector(`#timeout`);
   const adFormHousingTypeSelect = document.querySelector(`#type`);
   const addressCoordinates = document.querySelector(`#address`);
+  const formSucces = document.querySelector(`#success`);
   const housingMinPrice = {
     bungalow: 0,
     flat: 1000,
@@ -78,10 +79,8 @@
     priceRoom.setAttribute(`min`, housingMinPrice[adFormHousingTypeSelect.value]);
   });
 
-
-
   const showSuccessMessage = () => {
-    const successTemplate = document.querySelector(`#success`).content.querySelector(`.success`);
+    const successTemplate = formSucces.content.querySelector(`.success`);
     const successMessage = successTemplate.cloneNode(true);
     mainPage.appendChild(successMessage);
     document.addEventListener(`click`, () => {
@@ -97,15 +96,16 @@
   const showErrorMessage = () => {
     const errorTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
     const errorMessage = errorTemplate.cloneNode(true);
-    const removeErrorMessage = () => {
-      errorMessage.remove();
-    };
     mainPage.appendChild(errorMessage);
-    errorMessage.querySelector(`.error__button`).addEventListener(`click`, removeErrorMessage);
-    errorMessage.addEventListener(`click`, removeErrorMessage);
+    errorMessage.querySelector(`.error__button`).addEventListener(`click`, () =>{
+      errorMessage.remove();
+    });
+    errorMessage.addEventListener(`click`, () => {
+      errorMessage.remove();
+    });
     document.addEventListener(`keydown`, (evt) => {
       if (evt.key === `Escape`) {
-        removeErrorMessage;
+        errorMessage.remove();
       }
     });
   };

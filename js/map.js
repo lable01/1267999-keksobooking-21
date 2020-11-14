@@ -93,7 +93,6 @@
     mapPinMain.style.left = startPositionX + `px`;
     mapPinMain.style.top = startPositionY + `px`;
   };
-
   window.map = {
     map,
     mapPinMain,

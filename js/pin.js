@@ -29,8 +29,18 @@
     });
     return pinElement;
   };
+  /**
+   * Удаляет все показанные пины, кроме главной метки
+   */
+  const removePins = () => {
+    const pins = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+    pins.forEach((element) => {
+      element.remove();
+    });
+  };
 
   window.pin = {
-    renderPin
+    renderPin,
+    removePins
   };
 })();

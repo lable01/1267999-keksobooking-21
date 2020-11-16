@@ -40,7 +40,7 @@
     });
   };
 
-  const addAdressCoords = (coords) => {
+  const addAddressCoords = (coords) => {
     addressCoordinates.value = coords;
   };
 
@@ -114,19 +114,25 @@
     window.server.uploadData(new FormData(adForm), showSuccessMessage, showErrorMessage);
     evt.preventDefault();
     window.main.deactivatePage();
-    window.pin.removePins();
+    window.map.main.classList.add(`map--faded`);
+    adForm.classList.add(`ad-form--disabled`);
+    window.pin.remove();
     window.map.setMainPinCenter();
     adForm.reset();
   });
 
   adForm.addEventListener(`reset`, () => {
     adForm.reset();
+    window.map.main.classList.add(`map--faded`);
+    adForm.classList.add(`ad-form--disabled`);
+    window.pin.remove();
+    window.filter.reset();
   });
 
   window.form = {
-    adForm,
+    ad: adForm,
     allElementsDisabled,
     allElementsActivate,
-    addAdressCoords
+    addAddressCoords
   };
 })();

@@ -2,15 +2,15 @@
 
 (() => {
   const PINTIP_HEIGHT = 22;
-  const map = document.querySelector(`.map`);
-  const mapPinMain = map.querySelector(`.map__pin--main`);
+  const mapMain = document.querySelector(`.map`);
+  const mapPinMain = mapMain.querySelector(`.map__pin--main`);
   const startPositionX = mapPinMain.offsetLeft;
   const startPositionY = mapPinMain.offsetTop;
 
   const getPinCoords = () => {
     let coordinateX;
     let coordinateY;
-    if (map.classList.contains(`map--faded`)) {
+    if (mapMain.classList.contains(`map--faded`)) {
       coordinateX = Math.floor(mapPinMain.offsetLeft + mapPinMain.offsetWidth / 2);
       coordinateY = Math.floor(mapPinMain.offsetTop + mapPinMain.offsetHeight / 2);
     } else {
@@ -67,7 +67,7 @@
         mapPinMain.style.top = newPinCoords.y + `px`;
       }
 
-      window.form.addAdressCoords(getPinCoords(newCoords));
+      window.form.addAddressCoords(getPinCoords(newCoords));
     };
 
     const onMouseUp = (upEvt) => {
@@ -94,8 +94,8 @@
     mapPinMain.style.top = startPositionY + `px`;
   };
   window.map = {
-    map,
-    mapPinMain,
+    main: mapMain,
+    pinMain: mapPinMain,
     getPinCoords,
     setMainPinCenter
   };

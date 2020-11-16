@@ -1,14 +1,14 @@
 'use strict';
 
 const PINS_COUNT = 5;
-const adFormHeader = window.form.adForm.querySelector(`.ad-form-header`);
-const adFormElements = window.form.adForm.querySelectorAll(`.ad-form__element`);
+const adFormHeader = window.form.ad.querySelector(`.ad-form-header`);
+const adFormElements = window.form.ad.querySelectorAll(`.ad-form__element`);
 const mapFilters = document.querySelectorAll(`.map__filter`);
 const mapPins = document.querySelector(`.map__pins`);
 const renderPins = (data) => {
   const fragmentPin = document.createDocumentFragment();
   data.forEach((pin) => {
-    fragmentPin.appendChild(window.pin.renderPin(pin));
+    fragmentPin.appendChild(window.pin.render(pin));
   });
   mapPins.appendChild(fragmentPin);
 };
@@ -19,16 +19,17 @@ const deactivatePage = () => {
   window.form.allElementsDisabled(mapFilters);
 };
 deactivatePage();
+
 const activatePage = () => {
-  window.map.map.classList.remove(`map--faded`);
-  window.form.adForm.classList.remove(`ad-form--disabled`);
+  window.map.main.classList.remove(`map--faded`);
+  window.form.ad.classList.remove(`ad-form--disabled`);
   adFormHeader.removeAttribute(`disabled`);
   window.form.allElementsActivate(mapFilters);
   window.form.allElementsActivate(adFormElements);
-  window.form.addAdressCoords(window.map.getPinCoords());
-  window.map.getPinCoords();
+  window.form.addAddressCoords(window.map.getPinCoords());
 };
-window.map.mapPinMain.addEventListener(`click`, () => {
+
+const loadMap = () => {
   window.server.loadData((data) => {
     activatePage();
     renderPins(data.slice(0, PINS_COUNT));
@@ -41,11 +42,15 @@ window.map.mapPinMain.addEventListener(`click`, () => {
     errorElement.style.fontSize = `18px`;
     errorElement.textContent = errorMessage;
     document.body.insertAdjacentElement(`afterbegin`, errorElement);
-  }
-  );
-  window.main = {
-    PINS_COUNT,
-    deactivatePage,
-    renderPins
-  };
+  });
+};
+
+window.map.pinMain.addEventListener(`click`, () => {
+  loadMap();
+  window.map.pinMain.removeEventListener(`click`, loadMap);
 });
+window.main = {
+  PINS_COUNT,
+  deactivatePage,
+  renderPins
+};

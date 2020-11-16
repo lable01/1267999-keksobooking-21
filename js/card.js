@@ -49,13 +49,17 @@
     return photosFragment;
   };
 
+  const cardElement = cardTemplate.cloneNode(true);
+  const cardClose = cardElement.querySelector(`.popup__close`);
+  const cardElementClose = () => {
+    cardElement.remove();
+  };
   /**
    * Создание шаблона карточки объявления для заполнения фрагмента
    * @param {object} pin - данные объявлении
    * @return {object} шаблон объявление с заполненными данными
    */
   const renderCard = (pin) => {
-    const cardElement = cardTemplate.cloneNode(true);
     cardElement.querySelector(`h3`).textContent = pin.offer.title;
     cardElement.querySelector(`.popup__text--address`).textContent = pin.offer.adress;
     cardElement.querySelector(`.popup__text--price`).textContent = `${pin.offer.price} ₽/ночь`;
@@ -69,22 +73,25 @@
     cardElement.querySelector(`.popup__photos`).appendChild(renderPhotos(pin.offer.photos));
     cardElement.querySelector(`.popup__avatar`).src = pin.author.avatar;
 
-    const cardClose = cardElement.querySelector(`.popup__close`);
-    const cardElementClose = () => {
-      cardElement.remove();
-    };
     cardClose.addEventListener(`click`, () => {
       cardElementClose();
     });
-    cardClose.addEventListener(`keydown`, (evt) => {
+
+    const onCardCloseEscape = (evt) => {
       if (evt.key === `Escape`) {
         evt.preventDefault();
-        cardElementClose();
+        onCardClose();
       }
-    });
+    };
+    const onCardClose = () => {
+      cardElementClose();
+      document.removeEventListener(`keydown`, onCardClose);
+    };
+    document.addEventListener(`keydown`, onCardCloseEscape);
     return cardElement;
   };
   window.card = {
-    createCard
+    create: createCard,
+    close: cardElementClose
   };
 })();

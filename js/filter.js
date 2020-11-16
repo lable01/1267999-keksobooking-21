@@ -18,6 +18,10 @@
   const filterHousingGuests = filtersForm.querySelector(`#housing-guests`);
   const filterHousingReatures = filtersForm.querySelector(`#housing-features`);
 
+  const resetFilters = () => {
+    filtersForm.reset();
+  };
+
   const filterByHousingType = (data) => {
     return data.offer.type === filterHousingType.value ||
     filterHousingType.value === TYPE_ANY;
@@ -68,5 +72,10 @@
 
   filtersForm.addEventListener(`change`, () => {
     showFiltredData();
+    window.card.close();
   });
+
+  window.filter = {
+    reset: resetFilters
+  };
 })();

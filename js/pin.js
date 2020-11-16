@@ -18,13 +18,23 @@
      * Обработчик события клика на pin объявления
      * @return открывает карточку объявления при клике
      */
+    // const createPinOnClick = () => {
+    //   window.card.create(pin);
+    //   pinElement.classList.add(`map__pin--active`);
+    // }
     pinElement.addEventListener(`click`, () => {
-      window.card.createCard(pin);
+      window.card.create(pin);
+      pinElement.classList.add(`map__pin--active`);
     });
     pinElement.addEventListener(`keydown`, (evt) => {
       if (evt.key === `Enter`) {
         evt.preventDefault();
-        window.card.createCard(pin);
+        window.card.create(pin);
+        pinElement.classList.add(`map__pin--active`);
+      }
+      if (evt.key === `Escape`) {
+        evt.preventDefault();
+        pinElement.classList.remove(`map__pin--active`);
       }
     });
     return pinElement;
@@ -40,7 +50,7 @@
   };
 
   window.pin = {
-    renderPin,
-    removePins
+    render: renderPin,
+    remove: removePins
   };
 })();

@@ -72,7 +72,7 @@
 
   filtersForm.addEventListener(`change`, () => {
     showFiltredData();
-    window.card.close();
+    window.card.remove();
   });
 
   window.filter = {

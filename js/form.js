@@ -1,10 +1,8 @@
 'use strict';
 
 (() => {
-  const DECIMAL_SYSTEM = 10;
   const adForm = document.querySelector(`.ad-form`);
   const mainPage = document.querySelector(`main`);
-  const adFormSubmit = document.querySelector(`.ad-form__submit`);
   const roomNumber = document.querySelector(`#room_number`);
   const capacityNumber = document.querySelector(`#capacity`);
   const priceRoom = document.querySelector(`#price`);
@@ -18,6 +16,18 @@
     flat: 1000,
     house: 5000,
     palace: 10000
+  };
+  const housingMaxPrice = {
+    bungalow: 999,
+    flat: 4999,
+    house: 9999,
+    palace: Infinity
+  };
+  const roomValues = {
+    1: [1],
+    2: [1, 2],
+    3: [1, 2, 3],
+    100: [0]
   };
   /**
    * Присвоение атрибута disabled DOM элементам
@@ -45,26 +55,20 @@
     addressCoordinates.value = coords;
   };
 
-  adFormSubmit.addEventListener(`click`, () => {
-    const questQuantity = parseInt(capacityNumber.value, DECIMAL_SYSTEM);
-    const roomQuantity = parseInt(roomNumber.value, DECIMAL_SYSTEM);
-    const priceQuantity = parseInt(priceRoom.value, DECIMAL_SYSTEM);
-
-    if ((questQuantity === 1) && (roomQuantity === 1)) {
-      roomNumber.setCustomValidity(``);
-    } else if ((roomQuantity === 2) && ((questQuantity === 1) || (questQuantity === 2))) {
-      roomNumber.setCustomValidity(``);
-    } else if ((roomQuantity === 3) && ((questQuantity === 1) || (questQuantity === 2) || (questQuantity === 3))) {
-      roomNumber.setCustomValidity(``);
-    } else if ((roomQuantity === 100) && (questQuantity === 0)) {
-      roomNumber.setCustomValidity(``);
-    } else if ((priceQuantity < window.data.price.MIN) || (priceQuantity > window.data.price.MAX)) {
-      priceRoom.setCustomValidity(`Пожалуйста измените значение от 2000 до 20000`);
-    } else {
-      roomNumber.setCustomValidity(`Введено некорректное значение`);
-      priceRoom.setCustomValidity(``);
-    }
-  });
+  const checkRooms = (quantity) => {
+    const capacityOptions = capacityNumber.querySelectorAll(`option`);
+    capacityOptions.forEach((option) => {
+      option.disabled = true;
+    });
+    roomValues[quantity].forEach((setAmount) => {
+      capacityOptions.forEach((option) => {
+        if (Number(option.value) === setAmount) {
+          option.disabled = false;
+          option.selected = true;
+        }
+      });
+    });
+  };
 
   const onOptionChange = (evt) => {
     adFormTimeInInput.value = evt.target.value;
@@ -72,12 +76,17 @@
   };
 
   adFormTimeInInput.addEventListener(`change`, onOptionChange);
-
   adFormTimeOutInput.addEventListener(`change`, onOptionChange);
+
 
   adFormHousingTypeSelect.addEventListener(`change`, () => {
     priceRoom.placeholder = housingMinPrice[adFormHousingTypeSelect.value];
     priceRoom.setAttribute(`min`, housingMinPrice[adFormHousingTypeSelect.value]);
+    priceRoom.setAttribute(`max`, housingMaxPrice[adFormHousingTypeSelect.value]);
+  });
+
+  roomNumber.addEventListener(`change`, () => {
+    checkRooms(roomNumber.value);
   });
 
   const showSuccessMessage = () => {
@@ -87,52 +96,62 @@
     document.addEventListener(`click`, () => {
       successMessage.remove();
     });
-    document.addEventListener(`keydown`, (evt) => {
+    const onCloseSucces = (evt) => {
       if (evt.key === `Escape`) {
         successMessage.remove();
       }
-    });
+      document.removeEventListener(`keydown`, onCloseSucces);
+    };
+    document.addEventListener(`keydown`, onCloseSucces);
   };
 
   const showErrorMessage = () => {
     const errorTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
     const errorMessage = errorTemplate.cloneNode(true);
     mainPage.appendChild(errorMessage);
-    errorMessage.querySelector(`.error__button`).addEventListener(`click`, () =>{
+    errorMessage.querySelector(`.error__button`).addEventListener(`click`, () => {
       errorMessage.remove();
     });
     errorMessage.addEventListener(`click`, () => {
       errorMessage.remove();
     });
-    document.addEventListener(`keydown`, (evt) => {
+    const onCloseError = (evt) => {
       if (evt.key === `Escape`) {
         errorMessage.remove();
       }
-    });
+      document.removeEventListener(`keydown`, onCloseError);
+    };
+    document.addEventListener(`keydown`, onCloseError);
   };
-  const deactivateForm = () => {
-    adForm.reset();
+  const deactivatePage = () => {
+    window.main.deactivateForm();
     window.map.main.classList.add(`map--faded`);
     adForm.classList.add(`ad-form--disabled`);
+    window.card.remove();
     window.pin.remove();
-  }
+    adForm.reset();
+    window.filter.reset();
+    window.map.pinMain.addEventListener(`click`, window.main.onLoadMap);
+  };
 
-  adForm.addEventListener(`submit`, () => {
+  adForm.addEventListener(`submit`, (evt) => {
     window.server.uploadData(new FormData(adForm), showSuccessMessage, showErrorMessage);
-    window.main.deactivatePage();
+    evt.preventDefault();
+    deactivatePage();
     window.map.setMainPinCenter();
-    deactivateForm();
   });
 
   adForm.addEventListener(`reset`, () => {
-    window.filter.reset();
-    deactivateForm();
+    deactivatePage();
   });
+
 
   window.form = {
     ad: adForm,
+    roomNumber,
     allElementsDisabled,
     allElementsActivate,
-    addAddressCoords
+    addAddressCoords,
+    checkRooms
   };
 })();

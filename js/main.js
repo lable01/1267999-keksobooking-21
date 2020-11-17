@@ -13,12 +13,12 @@ const renderPins = (data) => {
   mapPins.appendChild(fragmentPin);
 };
 
-const deactivatePage = () => {
+const deactivateForm = () => {
   adFormHeader.setAttribute(`disabled`, `disabled`);
   window.form.allElementsDisabled(adFormElements);
   window.form.allElementsDisabled(mapFilters);
 };
-deactivatePage();
+deactivateForm();
 
 const activatePage = () => {
   window.map.main.classList.remove(`map--faded`);
@@ -27,6 +27,7 @@ const activatePage = () => {
   window.form.allElementsActivate(mapFilters);
   window.form.allElementsActivate(adFormElements);
   window.form.addAddressCoords(window.map.getPinCoords());
+  window.map.pinMain.removeEventListener(`click`, onLoadMap);
 };
 
 const loadMap = () => {
@@ -34,6 +35,7 @@ const loadMap = () => {
     activatePage();
     renderPins(data.slice(0, PINS_COUNT));
     window.dataMain = data;
+    window.form.checkRooms(window.form.roomNumber.value);
   },
   (errorMessage) => {
     const errorElement = document.createElement(`div`);
@@ -47,13 +49,13 @@ const loadMap = () => {
 
 const onLoadMap = () => {
   loadMap();
-  window.map.pinMain.removeEventListener(`click`, onLoadMap);
 };
 
 window.map.pinMain.addEventListener(`click`, onLoadMap);
 
 window.main = {
   PINS_COUNT,
-  deactivatePage,
+  deactivateForm,
+  onLoadMap,
   renderPins
 };

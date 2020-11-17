@@ -53,7 +53,7 @@
 
       const getNewCoords = (coords) => {
         return {
-          x: coords.x + mapPinMain.offsetWidth / 2,
+          x: coords.x + mapPinMain.offsetWidth / window.util.COORDINAT_COEFFICIENT,
           y: coords.y + (mapPinMain.offsetHeight + PINTIP_HEIGHT)
         };
       };

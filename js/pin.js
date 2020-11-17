@@ -14,7 +14,7 @@
     pinElement.style.top = pin.location.y - PIN + `px`;
     pinElement.querySelector(`img`).src = pin.author.avatar;
     pinElement.alt = pin.offer.title;
-    
+
     const onPinOpen = () => {
       window.card.create(pin);
       const mapPinsActive = document.querySelectorAll(`.map__pin--active`);
@@ -29,7 +29,7 @@
     };
 
     pinElement.addEventListener(`click`, onPinOpen);
-    
+
     pinElement.addEventListener(`keydown`, (evt) => {
       if (evt.key === `Enter`) {
         evt.preventDefault();
@@ -37,7 +37,7 @@
       }
       if (evt.key === `Escape`) {
         evt.preventDefault();
-        openPin();
+        onPinOpen();
       }
     });
     return pinElement;

@@ -50,10 +50,10 @@
   };
 
   const cardElement = cardTemplate.cloneNode(true);
-  const cardClose = cardElement.querySelector(`.popup__close`);
-  const cardElementClose = () => {
+  const cardElementRemove = () => {
     cardElement.remove();
   };
+
   /**
    * Создание шаблона карточки объявления для заполнения фрагмента
    * @param {object} pin - данные объявлении
@@ -72,9 +72,10 @@
     cardElement.querySelector(`.popup__photos`).innerHTML = ``;
     cardElement.querySelector(`.popup__photos`).appendChild(renderPhotos(pin.offer.photos));
     cardElement.querySelector(`.popup__avatar`).src = pin.author.avatar;
+    const cardClose = cardElement.querySelector(`.popup__close`);
 
     cardClose.addEventListener(`click`, () => {
-      cardElementClose();
+      cardElementRemove();
     });
 
     const onCardCloseEscape = (evt) => {
@@ -84,7 +85,7 @@
       }
     };
     const onCardClose = () => {
-      cardElementClose();
+      cardElementRemove();
       document.removeEventListener(`keydown`, onCardClose);
     };
     document.addEventListener(`keydown`, onCardCloseEscape);
@@ -92,9 +93,6 @@
   };
   window.card = {
     create: createCard,
-    close: cardElementClose
+    remove: cardElementRemove
   };
 })();
-
-
-

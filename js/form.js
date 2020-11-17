@@ -1,6 +1,7 @@
 'use strict';
 
 (() => {
+  const DECIMAL_SYSTEM = 10;
   const adForm = document.querySelector(`.ad-form`);
   const mainPage = document.querySelector(`main`);
   const adFormSubmit = document.querySelector(`.ad-form__submit`);
@@ -45,9 +46,9 @@
   };
 
   adFormSubmit.addEventListener(`click`, () => {
-    const questQuantity = parseInt(capacityNumber.value, 10);
-    const roomQuantity = parseInt(roomNumber.value, 10);
-    const priceQuantity = parseInt(priceRoom.value, 10);
+    const questQuantity = parseInt(capacityNumber.value, DECIMAL_SYSTEM);
+    const roomQuantity = parseInt(roomNumber.value, DECIMAL_SYSTEM);
+    const priceQuantity = parseInt(priceRoom.value, DECIMAL_SYSTEM);
 
     if ((questQuantity === 1) && (roomQuantity === 1)) {
       roomNumber.setCustomValidity(``);
@@ -65,14 +66,14 @@
     }
   });
 
-  const inAndOutInputChange = (evt) => {
+  const onOptionChange = (evt) => {
     adFormTimeInInput.value = evt.target.value;
     adFormTimeOutInput.value = evt.target.value;
   };
 
-  adFormTimeInInput.addEventListener(`change`, inAndOutInputChange);
+  adFormTimeInInput.addEventListener(`change`, onOptionChange);
 
-  adFormTimeOutInput.addEventListener(`change`, inAndOutInputChange);
+  adFormTimeOutInput.addEventListener(`change`, onOptionChange);
 
   adFormHousingTypeSelect.addEventListener(`change`, () => {
     priceRoom.placeholder = housingMinPrice[adFormHousingTypeSelect.value];
@@ -109,24 +110,23 @@
       }
     });
   };
-
-  adForm.addEventListener(`submit`, (evt) => {
-    window.server.uploadData(new FormData(adForm), showSuccessMessage, showErrorMessage);
-    evt.preventDefault();
-    window.main.deactivatePage();
+  const deactivateForm = () => {
+    adForm.reset();
     window.map.main.classList.add(`map--faded`);
     adForm.classList.add(`ad-form--disabled`);
     window.pin.remove();
+  }
+
+  adForm.addEventListener(`submit`, () => {
+    window.server.uploadData(new FormData(adForm), showSuccessMessage, showErrorMessage);
+    window.main.deactivatePage();
     window.map.setMainPinCenter();
-    adForm.reset();
+    deactivateForm();
   });
 
   adForm.addEventListener(`reset`, () => {
-    adForm.reset();
-    window.map.main.classList.add(`map--faded`);
-    adForm.classList.add(`ad-form--disabled`);
-    window.pin.remove();
     window.filter.reset();
+    deactivateForm();
   });
 
   window.form = {

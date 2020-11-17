@@ -45,10 +45,13 @@ const loadMap = () => {
   });
 };
 
-window.map.pinMain.addEventListener(`click`, () => {
+const onLoadMap = () => {
   loadMap();
-  window.map.pinMain.removeEventListener(`click`, loadMap);
-});
+  window.map.pinMain.removeEventListener(`click`, onLoadMap);
+};
+
+window.map.pinMain.addEventListener(`click`, onLoadMap);
+
 window.main = {
   PINS_COUNT,
   deactivatePage,

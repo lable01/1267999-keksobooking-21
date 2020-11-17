@@ -6,7 +6,7 @@
     `Второе предложение`,
     `Третье предложение`
   ];
-  const price = {
+  const Price = {
     MIN: 2000,
     MAX: 20000,
   };
@@ -17,19 +17,19 @@
     bungalow: `Бунгало`,
   };
   const adsType = Object.keys(adsTypeRus);
-  const rooms = {
+  const Rooms = {
     MIN: 1,
     MAX: 6,
   };
-  const guests = {
+  const Guests = {
     MIN: 1,
     MAX: 6,
   };
-  const checkout = [
+  const Checkout = [
     `12:00`,
     `13:00`,
     `14:00`];
-  const features = [
+  const Features = [
     `wifi`,
     `dishwasher`,
     `parking`,
@@ -37,12 +37,12 @@
     `elevator`,
     `conditioner`
   ];
-  const descriptions = [
+  const Descriptions = [
     `Описание первое`,
     `Описание второе`,
     `Описание третье`
   ];
-  const photos = [
+  const Photos = [
     `http://o0.github.io/assets/images/tokyo/hotel1.jpg`,
     `http://o0.github.io/assets/images/tokyo/hotel2.jpg`,
     `http://o0.github.io/assets/images/tokyo/hotel3.jpg`

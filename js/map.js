@@ -11,10 +11,10 @@
     let coordinateX;
     let coordinateY;
     if (mapMain.classList.contains(`map--faded`)) {
-      coordinateX = Math.floor(mapPinMain.offsetLeft + mapPinMain.offsetWidth / 2);
-      coordinateY = Math.floor(mapPinMain.offsetTop + mapPinMain.offsetHeight / 2);
+      coordinateX = Math.floor(mapPinMain.offsetLeft + mapPinMain.offsetWidth / window.util.COORDINAT_COEFFICIENT);
+      coordinateY = Math.floor(mapPinMain.offsetTop + mapPinMain.offsetHeight / window.util.COORDINAT_COEFFICIENT);
     } else {
-      coordinateX = Math.floor(mapPinMain.offsetLeft + mapPinMain.offsetWidth / 2);
+      coordinateX = Math.floor(mapPinMain.offsetLeft + mapPinMain.offsetWidth / window.util.COORDINAT_COEFFICIENT);
       coordinateY = Math.floor(mapPinMain.offsetTop + mapPinMain.offsetHeight + PINTIP_HEIGHT);
     }
     const coordinates = coordinateX + `, ` + coordinateY;

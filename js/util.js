@@ -1,6 +1,7 @@
 'use strict';
 
 (() => {
+  const COORDINAT_COEFFICIENT = 2;
   /**
   * Ищет случайное число
   * @param {Number} min - минимальное значение
@@ -23,6 +24,7 @@
   };
   window.util = {
     getRandomNumber,
-    getRandomArray
+    getRandomArray,
+    COORDINAT_COEFFICIENT
   };
 })();

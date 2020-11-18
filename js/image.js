@@ -31,11 +31,11 @@ const loadImage = (from, to) => {
   }
 };
 
-const onAvatarChose = function () {
+const onAvatarChose = () => {
   loadImage(avatarChoser, avatarPreview);
 };
 
-const onPhotoChose = function () {
+const onPhotoChose = () => {
   loadImage(adPhotoChoser, adPhotoPreview);
 };
 avatarChoser.addEventListener(`change`, onAvatarChose);

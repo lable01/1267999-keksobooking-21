@@ -93,16 +93,18 @@
     const successTemplate = formSucces.content.querySelector(`.success`);
     const successMessage = successTemplate.cloneNode(true);
     mainPage.appendChild(successMessage);
-    document.addEventListener(`click`, () => {
+    const onCloseSucess = () => {
       successMessage.remove();
-    });
-    const onCloseSucces = (evt) => {
+      document.addEventListener(`click`, onCloseSucess);
+    };
+    document.addEventListener(`click`, onCloseSucess);
+    const onCloseSuccesEscape = (evt) => {
       if (evt.key === `Escape`) {
         successMessage.remove();
       }
-      document.removeEventListener(`keydown`, onCloseSucces);
+      document.removeEventListener(`keydown`, onCloseSuccesEscape);
     };
-    document.addEventListener(`keydown`, onCloseSucces);
+    document.addEventListener(`keydown`, onCloseSuccesEscape);
   };
 
   const showErrorMessage = () => {

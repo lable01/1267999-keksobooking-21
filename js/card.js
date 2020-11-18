@@ -52,8 +52,16 @@
   const cardElement = cardTemplate.cloneNode(true);
   const cardElementRemove = () => {
     cardElement.remove();
+    document.removeEventListener(`keydown`, onCardCloseEscape);
   };
 
+  const onCardCloseEscape = (evt) => {
+    if (evt.key === `Escape`) {
+      evt.preventDefault();
+      cardElementRemove();
+      document.removeEventListener(`keydown`, onCardCloseEscape);
+    }
+  };
   /**
    * Создание шаблона карточки объявления для заполнения фрагмента
    * @param {object} pin - данные объявлении
@@ -72,22 +80,12 @@
     cardElement.querySelector(`.popup__photos`).innerHTML = ``;
     cardElement.querySelector(`.popup__photos`).appendChild(renderPhotos(pin.offer.photos));
     cardElement.querySelector(`.popup__avatar`).src = pin.author.avatar;
-    const cardClose = cardElement.querySelector(`.popup__close`);
+    const cardPopupClose = cardElement.querySelector(`.popup__close`);
 
-    cardClose.addEventListener(`click`, () => {
+    cardPopupClose.addEventListener(`click`, () => {
       cardElementRemove();
     });
 
-    const onCardCloseEscape = (evt) => {
-      if (evt.key === `Escape`) {
-        evt.preventDefault();
-        onCardClose();
-      }
-    };
-    const onCardClose = () => {
-      cardElementRemove();
-      document.removeEventListener(`keydown`, onCardClose);
-    };
     document.addEventListener(`keydown`, onCardCloseEscape);
     return cardElement;
   };

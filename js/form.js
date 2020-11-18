@@ -95,7 +95,7 @@
     mainPage.appendChild(successMessage);
     const onCloseSucess = () => {
       successMessage.remove();
-      document.addEventListener(`click`, onCloseSucess);
+      document.removeEventListener(`click`, onCloseSucess);
     };
     document.addEventListener(`click`, onCloseSucess);
     const onCloseSuccesEscape = (evt) => {

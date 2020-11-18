@@ -66,13 +66,13 @@
 
   const showFiltredData = () => {
     const filtredData = window.dataMain.filter(filterData);
-    window.pin.removePins();
+    window.pin.remove();
     window.debounce(window.main.renderPins(filtredData.slice(0, window.main.PINS_COUNT)));
   };
 
   filtersForm.addEventListener(`change`, () => {
     showFiltredData();
-    window.card.close();
+    window.card.remove();
   });
 
   window.filter = {

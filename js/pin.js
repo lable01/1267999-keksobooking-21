@@ -10,31 +10,34 @@
    */
   const renderPin = (pin) => {
     const pinElement = pinTemplate.cloneNode(true);
-    pinElement.style.left = pin.location.x - PIN / 2 + `px`;
+    pinElement.style.left = pin.location.x - PIN / window.util.COORDINAT_COEFFICIENT + `px`;
     pinElement.style.top = pin.location.y - PIN + `px`;
     pinElement.querySelector(`img`).src = pin.author.avatar;
     pinElement.alt = pin.offer.title;
-    /**
-     * Обработчик события клика на pin объявления
-     * @return открывает карточку объявления при клике
-     */
-    // const createPinOnClick = () => {
-    //   window.card.create(pin);
-    //   pinElement.classList.add(`map__pin--active`);
-    // }
-    pinElement.addEventListener(`click`, () => {
+
+    const onPinOpen = () => {
       window.card.create(pin);
-      pinElement.classList.add(`map__pin--active`);
-    });
+      const mapPinsActive = document.querySelectorAll(`.map__pin--active`);
+      if (mapPinsActive) {
+        mapPinsActive.forEach((element) => {
+          element.classList.remove(`map__pin--active`);
+        });
+        pinElement.classList.add(`map__pin--active`);
+      } else {
+        pinElement.classList.add(`map__pin--active`);
+      }
+    };
+
+    pinElement.addEventListener(`click`, onPinOpen);
+
     pinElement.addEventListener(`keydown`, (evt) => {
       if (evt.key === `Enter`) {
         evt.preventDefault();
-        window.card.create(pin);
-        pinElement.classList.add(`map__pin--active`);
+        onPinOpen();
       }
       if (evt.key === `Escape`) {
         evt.preventDefault();
-        pinElement.classList.remove(`map__pin--active`);
+        onPinOpen();
       }
     });
     return pinElement;
